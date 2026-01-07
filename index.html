@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Meme Catalog</title>
+  <title>Meme Vault (Actually Safe)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -73,28 +73,57 @@
       color: black;
       margin-top: 10px;
     }
-
     .disclaimer {
-      font-size: 14px;
-      font-weight: 600;
-      opacity: 0.85;
+      font-size: 22px;
+      font-weight: 800;
+      opacity: 0.92;
       text-align: center;
-      margin-top: 4px;
-      margin-bottom: 10px;
+      margin-top: 18px;
+      margin-bottom: 18px;
+      padding: 18px 10px 12px 10px;
+      border-radius: 18px;
+      background: linear-gradient(90deg, #818cf8 0%, #38bdf8 100%);
+      color: #18181b;
+      box-shadow: 0 2px 12px rgba(56,189,248,0.10);
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      transition: background 0.2s;
+    }
+    .disclaimer:active {
+      background: linear-gradient(90deg, #38bdf8 0%, #818cf8 100%);
+    }
+    button {
+      font-size: 20px;
+      padding: 20px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: #818cf8;
+    }
+    .meme-box {
+      min-height: 260px;
+    }
+    @media (pointer: coarse) {
+      .disclaimer, button {
+        font-size: 24px;
+        padding: 24px 12px;
+      }
+      .meme-box {
+        min-height: 320px;
+      }
     }
   </style>
 </head>
 <body>
 
 <div class="app">
-  <h1>Meme catalog</h1>
+  <h1> Meme catalog</h1>
   <div class="sub">Whitelisted memes</div>
   <div class="disclaimer" id="disclaimer">Disclaimer: Cring ahh memes</div>
 
   <div class="meme-box" id="box">Loading…</div>
   <div class="title" id="title"></div>
 
-  <button onclick="nextMeme()">🔄 New Meme</button>
+  <button onclick="nextMeme()"> New Meme</button>
 </div>
 
 <script>
@@ -126,6 +155,7 @@
       const subreddit = nextSubreddit();
       const res = await fetch(`https://meme-api.com/gimme/${subreddit}`);
       const meme = await res.json();
+
 
       if (meme.nsfw || !meme.url || !/\.(jpg|jpeg|png|gif)$/i.test(meme.url)) {
         nextMeme(retryCount);
